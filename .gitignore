@@ -17,3 +17,4 @@ backend/server.log
 backend/*.json
 !backend/package.json
 !backend/package-lock.json
+!backend/vercel.json
