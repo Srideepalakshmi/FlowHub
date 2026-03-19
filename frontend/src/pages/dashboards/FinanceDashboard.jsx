@@ -39,20 +39,20 @@ const FinanceDashboard = () => {
       <h1 className="text-3xl font-bold text-blue-700 dark:text-blue-400 mb-2">Finance Department Portal</h1>
       <p className="text-gray-600 dark:text-gray-400 mb-8">Welcome {user.name}. Here is the financial approval overview.</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-8">
         <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 rounded-xl p-6 transition-colors">
-          <p className="text-sm text-blue-600 dark:text-blue-400 font-medium mb-1">Pending Clearances</p>
+          <p className="text-sm text-blue-600 dark:text-blue-400 font-medium mb-1 truncate">Pending Clearances</p>
           <h3 className="text-2xl font-bold text-blue-800 dark:text-blue-300">{executions.length}</h3>
           <p className="text-xs text-blue-500 dark:text-blue-400/80 mt-2">Requires financial review</p>
         </div>
         <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800/50 rounded-xl p-6 transition-colors">
-          <p className="text-sm text-green-600 dark:text-green-400 font-medium mb-1">System Status</p>
-          <h3 className="text-2xl font-bold text-green-800 dark:text-green-300">Healthy</h3>
+          <p className="text-sm text-green-600 dark:text-green-400 font-medium mb-1 truncate">System Status</p>
+          <h3 className="text-2xl font-bold text-green-800 dark:text-green-300 leading-tight">Healthy</h3>
           <p className="text-xs text-green-500 dark:text-green-400/80 mt-2">API connections active</p>
         </div>
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/50 rounded-xl p-6 transition-colors">
-          <p className="text-sm text-red-600 dark:text-red-400 font-medium mb-1">Flagged / High Amount</p>
-          <h3 className="text-2xl font-bold text-red-800 dark:text-red-300">Alert</h3>
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/50 rounded-xl p-6 transition-colors sm:col-span-2 md:col-span-1">
+          <p className="text-sm text-red-600 dark:text-red-400 font-medium mb-1 truncate">Flagged / High Amount</p>
+          <h3 className="text-2xl font-bold text-red-800 dark:text-red-300 leading-tight">Alert</h3>
           <p className="text-xs text-red-500 dark:text-red-400/80 mt-2">Review individual records carefully</p>
         </div>
       </div>
@@ -62,19 +62,17 @@ const FinanceDashboard = () => {
         <div className="space-y-4">
           {executions.length === 0 ? <p className="text-gray-500 dark:text-gray-400">No pipelines pending finance review.</p> : null}
           {executions.map(ex => (
-            <div key={ex.id} className="flex justify-between items-center p-4 border border-gray-100 dark:border-zinc-700/50 rounded-lg bg-gray-50 dark:bg-zinc-800/50 hover:bg-white dark:hover:bg-zinc-800 transition-colors">
-              <div className="flex flex-col">
-                <span className="font-semibold text-gray-800 dark:text-gray-200">{ex.workflow_name}</span>
-                <span className="text-xs text-gray-500 dark:text-gray-400">Requested by: {ex.triggered_by}</span>
-                <span className="text-xs text-blue-600 dark:text-blue-400 mt-1 font-medium bg-blue-50 dark:bg-blue-900/20 p-2 rounded-md border border-blue-100 dark:border-blue-800/50">
+            <div key={ex.id} className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 gap-4 border border-gray-100 dark:border-zinc-700/50 rounded-lg bg-gray-50 dark:bg-zinc-800/50 hover:bg-white dark:hover:bg-zinc-800 transition-colors">
+              <div className="flex flex-col min-w-0 flex-1">
+                <span className="font-semibold text-gray-800 dark:text-gray-200 truncate">{ex.workflow_name}</span>
+                <span className="text-xs text-gray-500 dark:text-gray-400 truncate">Requested by: {ex.triggered_by}</span>
+                <span className="text-xs text-blue-600 dark:text-blue-400 mt-2 font-medium bg-blue-50 dark:bg-blue-900/20 p-2 rounded-md border border-blue-100 dark:border-blue-800/50 break-words">
                   Data: {Object.entries(ex.data || {}).map(([k, v]) => `${k}: ${v}`).join(' | ')}
                 </span>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="flex gap-2">
-                   <button onClick={() => handleAction(ex.id, 'Approve')} className="bg-blue-600 dark:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition font-medium">Clear Payment</button>
-                   <button onClick={() => handleAction(ex.id, 'Reject')} className="bg-white dark:bg-transparent border border-red-300 dark:border-red-500 text-red-600 dark:text-red-400 px-4 py-2 rounded-lg text-sm hover:bg-red-50 dark:hover:bg-red-900/30 transition font-medium">Reject</button>
-                </div>
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                 <button onClick={() => handleAction(ex.id, 'Approve')} className="flex-1 sm:flex-none bg-blue-600 dark:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition font-medium whitespace-nowrap">Clear Payment</button>
+                 <button onClick={() => handleAction(ex.id, 'Reject')} className="flex-1 sm:flex-none bg-white dark:bg-transparent border border-red-300 dark:border-red-500 text-red-600 dark:text-red-400 px-4 py-2 rounded-lg text-sm hover:bg-red-50 dark:hover:bg-red-900/30 transition font-medium">Reject</button>
               </div>
             </div>
           ))}

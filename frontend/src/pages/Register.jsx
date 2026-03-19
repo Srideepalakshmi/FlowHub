@@ -48,9 +48,9 @@ export default function Register() {
                 <input required className="input-field" placeholder="••••••••" type="password" onChange={e => setForm({ ...form, password: e.target.value })} />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">System Role *</label>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 sm:mb-2">System Role *</label>
                   <select required className="input-field cursor-pointer" onChange={e => setForm({ ...form, role: e.target.value })}>
                       <option value="employee">Employee</option>
                       <option value="manager">Manager</option>
@@ -60,7 +60,7 @@ export default function Register() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Department *</label>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 sm:mb-2">Department *</label>
                   <input required className="input-field" placeholder="e.g. Sales" onChange={e => setForm({ ...form, department: e.target.value })} />
                 </div>
               </div>

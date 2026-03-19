@@ -38,7 +38,7 @@ const EmployeeDashboard = () => {
       <h1 className="text-3xl font-bold text-blue-700 dark:text-blue-400 mb-2">Employee Portal</h1>
       <p className="text-gray-600 dark:text-gray-400 mb-8">Welcome back, {user.name}. Here is your task overview.</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-8">
         <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 rounded-xl p-6 text-center transition-colors">
           <h3 className="text-xl font-bold text-blue-800 dark:text-blue-300">{pendingCount}</h3>
           <p className="text-sm text-blue-600 dark:text-blue-400">Pending Approvals</p>
@@ -57,7 +57,7 @@ const EmployeeDashboard = () => {
       <div className="border border-blue-50 dark:border-zinc-800 rounded-xl p-6 shadow-sm transition-colors flex flex-col">
         <h2 className="text-xl font-bold text-blue-800 dark:text-blue-300 mb-4">My Submissions</h2>
         
-        <div className="flex flex-col sm:flex-row gap-3 mb-6">
+        <div className="flex flex-col md:flex-row gap-3 mb-6">
           <input 
             type="text" 
             placeholder="Search by workflow name or ID..." 
@@ -100,19 +100,19 @@ const EmployeeDashboard = () => {
               <>
                 {paginated.map(ex => (
                    <a href={`/executions/${ex.id}/details`} key={ex.id} className="block hover:shadow-md transition-shadow">
-                     <div className="flex justify-between items-center p-4 border border-gray-100 dark:border-zinc-700/50 rounded-xl bg-gray-50 dark:bg-zinc-800/50 hover:bg-white dark:hover:bg-zinc-800 hover:border-blue-200 dark:hover:border-zinc-600 transition-colors">
-                       <div>
-                          <h4 className="font-semibold text-gray-800 dark:text-gray-200">{ex.workflow_name}</h4>
-                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Started: {new Date(ex.started_at).toLocaleString()}</p>
-                       </div>
-                       <span className={`text-xs px-3 py-1.5 rounded-full font-bold shadow-sm ${
-                         ex.status === 'completed' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400' :
-                         ex.status === 'failed' || ex.status === 'rejected' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400' :
-                         'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-amber-400'
-                       }`}>
-                         {ex.status.replace('_', ' ').toUpperCase()}
-                       </span>
-                     </div>
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 gap-3 border border-gray-100 dark:border-zinc-700/50 rounded-xl bg-gray-50 dark:bg-zinc-800/50 hover:bg-white dark:hover:bg-zinc-800 hover:border-blue-200 dark:hover:border-zinc-600 transition-colors">
+                        <div className="min-w-0 flex-1">
+                           <h4 className="font-semibold text-gray-800 dark:text-gray-200 truncate">{ex.workflow_name}</h4>
+                           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Started: {new Date(ex.started_at).toLocaleString()}</p>
+                        </div>
+                        <span className={`text-xs px-3 py-1.5 rounded-full font-bold shadow-sm whitespace-nowrap ${
+                          ex.status === 'completed' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400' :
+                          ex.status === 'failed' || ex.status === 'rejected' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400' :
+                          'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-amber-400'
+                        }`}>
+                          {ex.status.replace('_', ' ').toUpperCase()}
+                        </span>
+                      </div>
                    </a>
                 ))}
                 

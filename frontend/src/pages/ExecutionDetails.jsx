@@ -65,11 +65,11 @@ const ExecutionDetails = () => {
         <ArrowLeft size={16} className="mr-1" /> Back to Dashboard
       </button>
 
-      <div className="flex justify-between items-start mb-8 pb-6 border-b border-gray-100 dark:border-zinc-800">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight text-blue-900 dark:text-blue-300 flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 pb-6 border-b border-gray-100 dark:border-zinc-800">
+        <div className="min-w-0 flex-1">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-blue-900 dark:text-blue-300 flex flex-wrap items-center gap-2 sm:gap-3">
              {workflow?.name || execution.workflow_id}
-             <span className={`text-xs px-3 py-1 rounded-full font-medium ${
+             <span className={`text-[10px] sm:text-xs px-2 sm:px-3 py-1 rounded-full font-medium whitespace-nowrap ${
                execution.status === 'completed' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400' :
                execution.status === 'failed' || execution.status === 'rejected' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400' :
                'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-amber-400'
@@ -77,15 +77,15 @@ const ExecutionDetails = () => {
                {execution.status.replace('_', ' ').toUpperCase()}
              </span>
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
-             Submitted by <span className="font-semibold text-slate-700 dark:text-slate-300">{execution.triggered_by}</span> on {new Date(execution.started_at).toLocaleString()}
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-2">
+             Submitted by <span className="font-semibold text-slate-700 dark:text-slate-300 break-all">{execution.triggered_by}</span> on {new Date(execution.started_at).toLocaleString()}
           </p>
         </div>
         {user.role !== 'admin' && (execution.status === 'failed' || execution.status === 'rejected' || execution.status === 'canceled') && (
             <button 
                 onClick={handleRetry} 
                 disabled={retrying}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-sm transition-colors disabled:opacity-50 flex items-center gap-2"
+                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-sm transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
                 {retrying ? 'Retrying...' : 'Retry Failed Execution'}
             </button>
@@ -93,37 +93,42 @@ const ExecutionDetails = () => {
       </div>
 
       {execution.logs && execution.logs.length > 0 && (
-         <div className="mb-10 px-4">
-           <h3 className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-4 border-b border-gray-100 dark:border-zinc-800 pb-2">Visual Progress</h3>
-           <div className="flex items-center w-full">
+         <div className="mb-10 px-0 sm:px-4 overflow-x-auto">
+           <h3 className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-8 border-b border-gray-100 dark:border-zinc-800 pb-2">Visual Progress</h3>
+           <div className="flex flex-col sm:flex-row items-start sm:items-center w-full gap-8 sm:gap-0 pb-4">
               {execution.logs.map((step, idx) => (
                  <React.Fragment key={idx}>
-                    <div className="flex flex-col items-center relative group" title={step.step_name}>
-                       <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white border-4 border-white dark:border-zinc-900 shadow-sm z-10 transition-transform group-hover:scale-110 ${
+                    <div className="flex flex-row sm:flex-col items-center relative group min-w-[200px] sm:min-w-0" title={step.step_name}>
+                       <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-white border-2 sm:border-4 border-white dark:border-zinc-900 shadow-sm z-10 transition-transform group-hover:scale-110 flex-shrink-0 ${
                           step.status === 'completed' ? 'bg-green-500' :
                           step.status === 'failed' || step.status === 'rejected' ? 'bg-red-500' : 
                           'bg-blue-500 animate-pulse'
                        }`}>
-                          {step.status === 'completed' ? <CheckCircle2 size={18} /> :
-                           step.status === 'failed' || step.status === 'rejected' ? <XCircle size={18} /> :
-                           <Clock size={18} />}
+                          {step.status === 'completed' ? <CheckCircle2 size={16} className="sm:size-[18px]" /> :
+                           step.status === 'failed' || step.status === 'rejected' ? <XCircle size={16} className="sm:size-[18px]" /> :
+                           <Clock size={16} className="sm:size-[18px]" />}
                        </div>
-                       <span className="text-xs font-medium mt-3 text-center text-slate-700 dark:text-slate-300 w-24 leading-tight">{step.step_name}</span>
+                       <div className="flex flex-col ml-4 sm:ml-0 sm:mt-3 text-left sm:text-center">
+                          <span className="text-xs font-bold text-slate-800 dark:text-slate-200 leading-tight">{step.step_name}</span>
+                          <span className="text-[10px] text-slate-500 mt-1 sm:hidden">{new Date(step.ended_at || step.started_at).toLocaleTimeString()}</span>
+                       </div>
                     </div>
                     {idx < execution.logs.length - 1 && (
-                       <div className={`flex-1 h-1 -mt-8 ${execution.logs[idx].status === 'completed' ? 'bg-green-500' : 'bg-slate-200 dark:bg-zinc-700'}`}></div>
+                       <div className={`hidden sm:block flex-1 h-0.5 sm:h-1 sm:-mt-10 ${execution.logs[idx].status === 'completed' ? 'bg-green-500' : 'bg-slate-200 dark:bg-zinc-700'}`}></div>
                     )}
                  </React.Fragment>
               ))}
               {(execution.status === 'in_progress' || execution.status === 'pending_approval') && (
                  <>
-                   <div className="flex-1 h-1 -mt-8 bg-slate-200 dark:bg-zinc-700"></div>
-                   <div className="flex flex-col items-center relative group" title="Awaiting Next Step">
-                       <div className="w-10 h-10 rounded-full flex items-center justify-center bg-slate-100 text-slate-400 dark:bg-zinc-800 border-4 border-white dark:border-zinc-900 z-10 transition-transform group-hover:scale-110">
-                          <Clock size={18} />
-                       </div>
-                       <span className="text-xs font-medium mt-3 text-center text-slate-500 dark:text-slate-400 w-24 leading-tight whitespace-nowrap">Awaiting...</span>
-                    </div>
+                    <div className="hidden sm:block flex-1 h-0.5 sm:h-1 sm:-mt-10 bg-slate-200 dark:bg-zinc-700"></div>
+                    <div className="flex flex-row sm:flex-col items-center relative group min-w-[200px] sm:min-w-0" title="Awaiting Next Step">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-slate-100 text-slate-400 dark:bg-zinc-800 border-2 sm:border-4 border-white dark:border-zinc-900 z-10 transition-transform group-hover:scale-110 flex-shrink-0">
+                           <Clock size={16} className="sm:size-[18px]" />
+                        </div>
+                        <div className="flex flex-col ml-4 sm:ml-0 sm:mt-3 text-left sm:text-center">
+                           <span className="text-xs font-medium text-slate-500 dark:text-slate-400 leading-tight">Awaiting...</span>
+                        </div>
+                     </div>
                  </>
               )}
            </div>

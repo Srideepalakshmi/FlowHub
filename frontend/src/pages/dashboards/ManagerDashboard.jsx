@@ -50,21 +50,19 @@ const ManagerDashboard = () => {
       <h1 className="text-3xl font-bold text-blue-700 dark:text-blue-400 mb-2">Manager Portal</h1>
       <p className="text-gray-600 dark:text-gray-400 mb-8">Hello {user.name}, you have items awaiting your approval.</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 rounded-xl p-6 flex justify-between items-center transition-colors">
-          <div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8">
+        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 rounded-xl p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 transition-colors">
+          <div className="min-w-0">
             <h3 className="text-2xl font-bold text-blue-800 dark:text-blue-300">{executions.length}</h3>
             <p className="text-sm text-blue-600 dark:text-blue-400">Pending Approvals</p>
           </div>
-          <button onClick={fetchPending} className="bg-blue-600 dark:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition">
+          <button onClick={fetchPending} className="w-full sm:w-auto bg-blue-600 dark:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition">
             Refresh List
           </button>
         </div>
-        <div className="bg-purple-50 dark:bg-purple-900/10 border border-purple-200 dark:border-purple-800/50 rounded-xl p-6 flex justify-between items-center transition-colors">
-          <div>
-            <h3 className="text-2xl font-bold text-purple-800 dark:text-purple-300">Department Status</h3>
-            <p className="text-sm text-purple-600 dark:text-purple-400">Everything operating normally</p>
-          </div>
+        <div className="bg-purple-50 dark:bg-purple-900/10 border border-purple-200 dark:border-purple-800/50 rounded-xl p-6 flex flex-col justify-center transition-colors">
+          <h3 className="text-xl font-bold text-purple-800 dark:text-purple-300">Department Status</h3>
+          <p className="text-sm text-purple-600 dark:text-purple-400">Everything operating normally</p>
         </div>
       </div>
 
@@ -145,9 +143,9 @@ const ManagerDashboard = () => {
 
       {/* Component 3: Pipeline Library */}
       <div className="border border-purple-100 dark:border-purple-900/30 rounded-xl p-6 shadow-sm transition-colors mt-8 bg-purple-50/30 dark:bg-purple-900/10">
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <h2 className="text-xl font-bold text-purple-800 dark:text-purple-300">Workflow Templates Database</h2>
-          <a href="/workflows/new" className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 transition px-3 py-1.5 bg-purple-100 dark:bg-purple-900/30 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-800/50">+ Create Workflow</a>
+          <a href="/workflows/new" className="w-full sm:w-auto text-center text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 transition px-3 py-1.5 bg-purple-100 dark:bg-purple-900/30 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-800/50">+ Create Workflow</a>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {workflows.map(wf => (

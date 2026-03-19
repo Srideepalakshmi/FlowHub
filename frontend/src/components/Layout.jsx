@@ -8,6 +8,7 @@ const Layout = ({ children }) => {
   const navigate = useNavigate();
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const userStr = localStorage.getItem('user');
   const user = userStr ? JSON.parse(userStr) : null;
@@ -97,14 +98,29 @@ const Layout = ({ children }) => {
   return (
     <div className="flex h-screen bg-slate-50 dark:bg-black text-slate-900 dark:text-slate-100 overflow-hidden transition-colors duration-300">
       {/* Sidebar */}
-      <aside className="w-64 flex-shrink-0 border-r border-blue-100 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-lg flex flex-col items-stretch z-10 transition-colors duration-300">
-        <div className="h-16 flex items-center px-6 border-b border-blue-100 dark:border-zinc-800">
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm"
+          onClick={() => setIsSidebarOpen(false)}
+        ></div>
+      )}
+
+      {/* Sidebar */}
+      <aside className={`
+        fixed inset-y-0 left-0 w-64 flex-shrink-0 border-r border-blue-100 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-lg flex flex-col items-stretch z-50 transition-transform duration-300 lg:relative lg:translate-x-0
+        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+      `}>
+        <div className="h-16 flex items-center justify-between px-6 border-b border-blue-100 dark:border-zinc-800">
           <div className="flex items-center gap-2 text-blue-700 dark:text-blue-400">
             <div className="w-8 h-8 rounded bg-blue-700 text-white flex items-center justify-center font-bold shadow-sm">
               FH
             </div>
             <span className="text-lg font-bold tracking-tight">FlowHub</span>
           </div>
+          <button className="lg:hidden p-1 text-slate-500" onClick={() => setIsSidebarOpen(false)}>
+            <LogOut size={20} className="rotate-180" />
+          </button>
         </div>
         
         <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
@@ -117,6 +133,7 @@ const Layout = ({ children }) => {
               <NavLink
                 key={item.name}
                 to={item.href}
+                onClick={() => setIsSidebarOpen(false)}
                 className={`
                   flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors
                   ${isActive 
@@ -134,9 +151,9 @@ const Layout = ({ children }) => {
         <div className="p-4 border-t border-blue-100 dark:border-slate-800">
           <div className="flex items-center gap-3 px-3 py-2 mb-2">
             <UserCircle className="h-8 w-8 text-blue-400 dark:text-blue-500" />
-            <div className="flex flex-col">
-              <span className="text-sm font-medium text-blue-900 dark:text-blue-200">{user.name}</span>
-              <span className="text-xs text-blue-500 dark:text-blue-400">{user.email}</span>
+            <div className="flex flex-col min-w-0">
+              <span className="text-sm font-medium text-blue-900 dark:text-blue-200 truncate">{user.name}</span>
+              <span className="text-xs text-blue-500 dark:text-blue-400 truncate">{user.email}</span>
             </div>
           </div>
           <button onClick={handleLogout} className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-md bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors group font-medium text-sm border border-red-100 dark:border-red-500/20">
@@ -149,10 +166,18 @@ const Layout = ({ children }) => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative z-0 bg-slate-50 dark:bg-black transition-colors duration-300">
         {/* Top Header */}
-        <header className="h-16 flex-shrink-0 border-b border-blue-100 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex items-center justify-between px-8 transition-colors duration-300">
-          <h1 className="text-lg font-semibold text-slate-800 dark:text-slate-100 tracking-tight">
-            {navigation.find(n => location.pathname === n.href || (n.href !== '/' && location.pathname.startsWith(n.href.split('/new')[0]) && n.href !== '/settings' && n.href !== '/audit-logs'))?.name || 'Overview'}
-          </h1>
+        <header className="h-16 flex-shrink-0 border-b border-blue-100 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex items-center justify-between px-4 sm:px-8 transition-colors duration-300">
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => setIsSidebarOpen(true)}
+              className="lg:hidden p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-zinc-800"
+            >
+              <LayoutDashboard size={20} />
+            </button>
+            <h1 className="text-base sm:text-lg font-semibold text-slate-800 dark:text-slate-100 tracking-tight whitespace-nowrap overflow-hidden text-ellipsis max-w-[150px] sm:max-w-none">
+              {navigation.find(n => location.pathname === n.href || (n.href !== '/' && location.pathname.startsWith(n.href.split('/new')[0]) && n.href !== '/settings' && n.href !== '/audit-logs'))?.name || 'Overview'}
+            </h1>
+          </div>
           <div className="relative flex items-center gap-4">
             
             <button
@@ -207,7 +232,7 @@ const Layout = ({ children }) => {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto w-full p-8 relative">
+        <main className="flex-1 overflow-y-auto w-full p-4 sm:p-8 relative">
           <div className="max-w-7xl mx-auto w-full">
             {children}
           </div>

@@ -46,32 +46,32 @@ const AdminDashboard = () => {
 
   return (
     <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl shadow-sm border border-blue-100 dark:border-zinc-800 max-w-5xl mx-auto transition-colors duration-300">
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h1 className="text-3xl font-bold text-blue-700 dark:text-blue-400 mb-2">Higher Authorities (Admin) Portal</h1>
-          <p className="text-gray-600 dark:text-gray-400">System Overview and Global Configuration, {user.name}.</p>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold text-blue-700 dark:text-blue-400 mb-2 truncate">Higher Authorities (Admin) Portal</h1>
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 truncate">System Overview and Global Configuration, {user.name}.</p>
         </div>
-        <button onClick={generateReport} className="bg-blue-600 dark:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-medium hover:bg-blue-700 transition shadow-sm">
+        <button onClick={generateReport} className="w-full sm:w-auto bg-blue-600 dark:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-medium hover:bg-blue-700 transition shadow-sm whitespace-nowrap">
           Generate Global Report
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div className="bg-white dark:bg-zinc-800 border border-blue-100 dark:border-zinc-700 rounded-xl p-5 shadow-sm text-center transition-colors">
-          <h3 className="text-3xl font-bold text-blue-900 dark:text-blue-300 mb-1">{totalReq}</h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Total Workflows</p>
+          <h3 className="text-2xl sm:text-3xl font-bold text-blue-900 dark:text-blue-300 mb-1">{totalReq}</h3>
+          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Total Workflows</p>
         </div>
         <div className="bg-white dark:bg-zinc-800 border border-blue-100 dark:border-zinc-700 rounded-xl p-5 shadow-sm text-center transition-colors">
-          <h3 className="text-3xl font-bold text-blue-900 dark:text-blue-300 mb-1">Active</h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400">System Status</p>
+          <h3 className="text-2xl sm:text-3xl font-bold text-blue-900 dark:text-blue-300 mb-1 leading-tight sm:leading-normal">Active</h3>
+          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">System Status</p>
         </div>
         <div className="bg-white dark:bg-zinc-800 border border-blue-100 dark:border-zinc-700 rounded-xl p-5 shadow-sm text-center transition-colors">
-          <h3 className="text-3xl font-bold text-blue-900 dark:text-blue-300 mb-1">{uptime}%</h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Success Rate</p>
+          <h3 className="text-2xl sm:text-3xl font-bold text-blue-900 dark:text-blue-300 mb-1">{uptime}%</h3>
+          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Success Rate</p>
         </div>
         <div className="bg-white dark:bg-zinc-800 border border-red-100 dark:border-red-900/50 rounded-xl p-5 shadow-sm text-center transition-colors">
-          <h3 className="text-3xl font-bold text-red-600 dark:text-red-400 mb-1">{failedCount}</h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Failed Executions</p>
+          <h3 className="text-2xl sm:text-3xl font-bold text-red-600 dark:text-red-400 mb-1">{failedCount}</h3>
+          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Failed Executions</p>
         </div>
       </div>
 
@@ -98,11 +98,11 @@ const AdminDashboard = () => {
             <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">System Activity</h2>
           </div>
           
-          <div className="flex gap-2 mb-4">
+          <div className="flex flex-col sm:flex-row gap-2 mb-4">
             <input 
               type="text" 
               placeholder="Search by workflow, user, or ID..." 
-              className="flex-1 px-3 py-2 text-sm border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800 rounded-lg focus:outline-none focus:border-blue-500 dark:text-white"
+              className="flex-1 px-3 py-2 text-xs sm:text-sm border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800 rounded-lg focus:outline-none focus:border-blue-500 dark:text-white min-w-0"
               value={searchTerm}
               onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
             />
@@ -148,20 +148,20 @@ const AdminDashboard = () => {
                           ex.status === 'in_progress' ? 'bg-blue-500 animate-pulse' : 'bg-yellow-500'
                         }`}></div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-gray-800 dark:text-gray-200 truncate">
+                          <p className="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 truncate">
                             <span className="font-bold">{ex.workflow_name}</span> - <span className="opacity-75">{ex.status.replace('_', ' ').toUpperCase()}</span>
                           </p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate">{new Date(ex.started_at).toLocaleString()} by {ex.triggered_by}</p>
+                          <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate">{new Date(ex.started_at).toLocaleString()} by {ex.triggered_by}</p>
                           
                           {(ex.status === 'rejected' || ex.status === 'failed') && ex.logs && ex.logs.length > 0 && (() => {
                              const failLog = ex.logs.slice().reverse().find(l => l.status === 'rejected' || l.status === 'failed');
                              if (!failLog) return null;
                              return (
-                               <div className="mt-2 mb-1 p-2 bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 rounded-md inline-block">
-                                 <p className="text-xs text-red-700 dark:text-red-400">
-                                   <span className="font-semibold">Failed Stage:</span> {failLog.step_name} • 
-                                   <span className="font-semibold ml-2">Action By:</span> {failLog.approver_id || 'System'} • 
-                                   <span className="font-semibold ml-2">Time:</span> {new Date(failLog.ended_at).toLocaleString()}
+                               <div className="mt-2 mb-1 p-2 bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 rounded-md inline-block max-w-full">
+                                 <p className="text-[10px] sm:text-xs text-red-700 dark:text-red-400 break-words">
+                                   <span className="font-semibold text-[8px] sm:text-[10px] block sm:inline">Failed Stage: {failLog.step_name}</span> 
+                                   <span className="font-semibold ml-0 sm:ml-2 text-[8px] sm:text-[10px] block sm:inline">Action By: {failLog.approver_id || 'System'}</span> 
+                                   <span className="font-semibold ml-0 sm:ml-2 text-[8px] sm:text-[10px] block sm:inline">Time: {new Date(failLog.ended_at).toLocaleString()}</span>
                                  </p>
                                  {failLog.error_message && <p className="text-xs text-red-600 dark:text-red-500 mt-1 italic">"{failLog.error_message}"</p>}
                                </div>
@@ -201,9 +201,9 @@ const AdminDashboard = () => {
 
       {/* Module 3: Pipeline Library */}
       <div className="border border-purple-100 dark:border-purple-900/30 rounded-xl p-6 shadow-sm transition-colors mt-8 bg-purple-50/30 dark:bg-purple-900/10">
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <h2 className="text-xl font-bold text-purple-800 dark:text-purple-300">Workflow Templates Database</h2>
-          <NavLink to="/workflows/new" className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 transition px-3 py-1.5 bg-purple-100 dark:bg-purple-900/30 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-800/50">+ Create Workflow</NavLink>
+          <NavLink to="/workflows/new" className="w-full sm:w-auto text-center text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 transition px-3 py-1.5 bg-purple-100 dark:bg-purple-900/30 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-800/50">+ Create Workflow</NavLink>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {workflows.map(wf => (
