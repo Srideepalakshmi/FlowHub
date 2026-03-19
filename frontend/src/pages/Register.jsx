@@ -5,15 +5,29 @@ import { useNavigate, Link } from 'react-router-dom';
 export default function Register() {
     const navigate = useNavigate();
     const [form, setForm] = useState({ name: '', email: '', password: '', role: 'employee', department: '' });
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    React.useEffect(() => {
+      if (localStorage.getItem('user')) {
+        navigate('/');
+      }
+    }, [navigate]);
 
     const submit = async (e) => {
         e.preventDefault();
+        if (loading) return;
+        setLoading(true);
         setError(null);
         try {
-            await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/auth/register`, form);
-            navigate('/login');
+            const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/auth/register`, form);
+            
+            // Auto-login after registration for better UX
+            localStorage.setItem('user', JSON.stringify(res.data.user));
+            localStorage.setItem('role', res.data.user.role);
+            window.location.href = '/';
         } catch (err) {
+            setLoading(false);
             setError(err.response?.data?.message || 'Failed to register account.');
         }
     };
@@ -66,8 +80,17 @@ export default function Register() {
               </div>
             </div>
 
-            <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl mt-8 transition-colors shadow-sm">
-              Register Securely
+            <button 
+              type="submit" 
+              disabled={loading}
+              className={`w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl mt-8 transition-colors shadow-sm flex items-center justify-center gap-2 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+            >
+              {loading ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  Registering...
+                </>
+              ) : 'Register Securely'}
             </button>
             <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
               Already have an account?{' '}

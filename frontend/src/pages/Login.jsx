@@ -6,10 +6,20 @@ export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // Redirect if already logged in
+  React.useEffect(() => {
+    if (localStorage.getItem('user')) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   const login = async (e) => {
     e.preventDefault();
+    if (loading) return;
+    setLoading(true);
     setError(null);
     try {
       const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/auth/login`, {
@@ -22,6 +32,7 @@ export default function Login() {
       // Use window.location.href to ensure a clean state and trigger Layout's useEffect
       window.location.href = '/';
     } catch (err) {
+      setLoading(false);
       if (err.response) {
         setError(err.response.data.message || 'Invalid credentials');
       } else {
@@ -68,8 +79,17 @@ export default function Login() {
           </div>
         </div>
 
-        <button type="submit" className="w-full bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl mt-8 transition-colors shadow-sm">
-          Sign In
+        <button 
+          type="submit" 
+          disabled={loading}
+          className={`w-full bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl mt-8 transition-colors shadow-sm flex items-center justify-center gap-2 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+        >
+          {loading ? (
+            <>
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+              Signing In...
+            </>
+          ) : 'Sign In'}
         </button>
 
         <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
