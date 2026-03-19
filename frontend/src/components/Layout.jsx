@@ -14,10 +14,10 @@ const Layout = ({ children }) => {
   const user = userStr ? JSON.parse(userStr) : null;
 
   useEffect(() => {
-    if (!user) {
+    if (!user && location.pathname !== '/login' && location.pathname !== '/register') {
       navigate('/login', { replace: true });
     }
-  }, [user, navigate]);
+  }, [user, navigate, location.pathname]);
 
   if (!user) return null; // Avoid rendering layout while redirecting
 

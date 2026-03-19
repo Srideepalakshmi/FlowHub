@@ -18,7 +18,9 @@ export default function Login() {
 
       localStorage.setItem('user', JSON.stringify(res.data));
       localStorage.setItem('role', res.data.role); // Important for Dashboard and RBAC
-      navigate('/');
+      
+      // Use window.location.href to ensure a clean state and trigger Layout's useEffect
+      window.location.href = '/';
     } catch (err) {
       if (err.response) {
         setError(err.response.data.message || 'Invalid credentials');
