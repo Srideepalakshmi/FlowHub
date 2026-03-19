@@ -49,17 +49,17 @@ export default function Register() {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Full Name *</label>
-                <input required className="input-field" placeholder="John Doe" onChange={e => setForm({ ...form, name: e.target.value })} />
+                <input required className="input-field" placeholder="Enter your full name" onChange={e => setForm({ ...form, name: e.target.value })} />
               </div>
               
               <div>
                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Email Address *</label>
-                <input required type="email" className="input-field" placeholder="john@example.com" onChange={e => setForm({ ...form, email: e.target.value })} />
+                <input required type="email" className="input-field" placeholder="Enter your email" onChange={e => setForm({ ...form, email: e.target.value })} />
               </div>
               
               <div>
                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Password *</label>
-                <input required className="input-field" placeholder="••••••••" type="password" onChange={e => setForm({ ...form, password: e.target.value })} />
+                <input required className="input-field" placeholder="Enter your password" type="password" onChange={e => setForm({ ...form, password: e.target.value })} />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

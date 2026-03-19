@@ -62,7 +62,7 @@ export default function Login() {
               required
               type="email"
               className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-blue-500 outline-none transition-colors"
-              placeholder="name@example.com"
+              placeholder="Enter your email"
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
@@ -73,7 +73,7 @@ export default function Login() {
               required
               type="password"
               className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-blue-500 outline-none transition-colors"
-              placeholder="••••••••"
+              placeholder="Enter your password"
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
