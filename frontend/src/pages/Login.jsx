@@ -9,7 +9,6 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Redirect if already logged in
   React.useEffect(() => {
     if (localStorage.getItem('user')) {
       navigate('/');
@@ -27,9 +26,8 @@ export default function Login() {
       });
 
       localStorage.setItem('user', JSON.stringify(res.data));
-      localStorage.setItem('role', res.data.role); // Important for Dashboard and RBAC
+      localStorage.setItem('role', res.data.role);
       
-      // Use window.location.href to ensure a clean state and trigger Layout's useEffect
       window.location.href = '/';
     } catch (err) {
       setLoading(false);

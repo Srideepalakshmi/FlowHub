@@ -18,9 +18,9 @@ app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/workflows', workflowRoutes);
 app.use('/workflows/:workflow_id/steps', stepRoutes);
-app.use('/steps', stepRoutes); // for PUT/DELETE directly via step id
+app.use('/steps', stepRoutes);
 app.use('/steps/:step_id/rules', ruleRoutes);
-app.use('/rules', ruleRoutes); // for PUT/DELETE directly via rule id
+app.use('/rules', ruleRoutes);
 app.use('/', executionRoutes);
 
 const PORT = process.env.PORT || 5000;

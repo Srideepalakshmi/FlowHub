@@ -7,7 +7,6 @@ router.post('/register', async (req, res) => {
     try {
         const { name, email, password, role, department } = req.body;
         
-        // Basic check if user already exists
         const existing = await User.findOne({ email });
         if (existing) {
             return res.status(400).json({ message: 'Email already exists' });
@@ -33,7 +32,6 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
         
-        // Send user back (excluding password typically, but for simplicity we return the mongo doc)
         res.json(user);
     } catch (error) {
         console.error("Login Error:", error);

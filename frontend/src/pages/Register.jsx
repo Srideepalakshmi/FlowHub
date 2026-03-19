@@ -22,7 +22,6 @@ export default function Register() {
         try {
             const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/auth/register`, form);
             
-            // Auto-login after registration for better UX
             localStorage.setItem('user', JSON.stringify(res.data.user));
             localStorage.setItem('role', res.data.user.role);
             window.location.href = '/';
