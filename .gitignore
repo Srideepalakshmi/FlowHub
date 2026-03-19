@@ -1,0 +1,19 @@
+# Roots 
+node_modules/
+.env
+.DS_Store
+
+# Frontend
+frontend/dist/
+frontend/node_modules/
+frontend/.env
+frontend/.env.local
+
+# Backend
+backend/node_modules/
+backend/.env
+backend/err.txt
+backend/server.log
+backend/*.json
+!backend/package.json
+!backend/package-lock.json

@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: transparent;
+    --foreground: #0f172a;
+    --card: rgba(255, 255, 255, 0.85);
+    --card-foreground: #0f172a;
+    --popover: rgba(255, 255, 255, 0.95);
+    --popover-foreground: #0f172a;
+    --primary: #4f46e5;
+    --primary-foreground: #ffffff;
+    --secondary: rgba(255, 255, 255, 0.6);
+    --secondary-foreground: #0f172a;
+    --muted: rgba(241, 245, 249, 0.8);
+    --muted-foreground: #475569;
+    --accent: rgba(241, 245, 249, 0.9);
+    --accent-foreground: #0f172a;
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    --border: rgba(203, 213, 225, 0.6);
+    --input: rgba(203, 213, 225, 0.6);
+    --ring: #94a3b8;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: transparent;
+    --foreground: #f8fafc;
+    --card: rgba(24, 24, 27, 0.85); /* zinc-900 */
+    --card-foreground: #f8fafc;
+    --popover: rgba(24, 24, 27, 0.95);
+    --popover-foreground: #f8fafc;
+    --primary: #3b82f6;
+    --primary-foreground: #ffffff;
+    --secondary: rgba(39, 39, 42, 0.6);
+    --secondary-foreground: #f8fafc;
+    --muted: rgba(39, 39, 42, 0.8);
+    --muted-foreground: #94a3b8;
+    --accent: rgba(39, 39, 42, 0.9);
+    --accent-foreground: #f8fafc;
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    --border: rgba(63, 63, 70, 0.6); /* zinc-700 */
+    --input: rgba(63, 63, 70, 0.6);
+    --ring: #3b82f6;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 dark:bg-black dark:text-white transition-colors duration-300;
+    @apply font-sans antialiased;
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+
+  /* Modern Card look */
+  .glass-card {
+    @apply bg-card text-card-foreground border border-border shadow-sm rounded-lg overflow-hidden backdrop-blur-md dark:bg-slate-800 dark:border-slate-700;
+  }
+
+  /* Clean UI Buttons */
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 bg-blue-600 text-white hover:bg-blue-700 h-10 px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-600;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-secondary border border-border hover:bg-accent focus:bg-accent hover:text-accent-foreground px-4 py-2 shadow-sm dark:bg-slate-800 dark:border-slate-600;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-destructive text-destructive-foreground hover:bg-destructive/90 px-4 py-2 shadow-sm;
+  }
+
+  /* Solid Inputs */
+  .input-field {
+    @apply flex h-10 w-full rounded-md border border-input bg-white/70 backdrop-blur-sm px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-shadow dark:bg-slate-800 dark:border-slate-700 dark:text-white dark:focus-visible:ring-blue-500;
+  }
+}
+
+/* Base resets & typography */
+html,
+body,
+#root {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-semibold tracking-tight text-foreground;
+}
+
+code {
+  @apply font-mono rounded bg-blue-100 px-1 py-1 text-sm text-blue-900;
+}
+
+/* Custom Scrollbar for a premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.7);
+}
