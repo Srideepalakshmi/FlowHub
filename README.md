@@ -44,3 +44,9 @@ It allows users to design workflows, attach sequential or conditional steps, set
 7. Define a `DEFAULT` rule that points to another step "Auto Reject".
 8. Go back to Dashboard, click **Execute** (Play icon) on your workflow.
 9. Enter an amount and hit **Start Workflow** to see the logs generate in real-time.
+
+##
+Link : tinyurl.com/5798t6xh
+
+
+
